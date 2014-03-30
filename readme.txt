@@ -30,3 +30,7 @@ Customisable onscreen keyboard displaying your keypresses
 5. Run keyboard.exe
 
 6. Use Alt+q to close the keyboard OR right-click the Autoit system tray icon and select Exit
+
+//Credits
+RichMinichiello
+http://www.autoitscript.com/forum/topic/159626-on-screen-keyboard/
