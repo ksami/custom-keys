@@ -5,7 +5,7 @@
 #include <Misc.au3>
 #include <keyboardVars.au3>
 
-HotKeySet("ESC", "_Exit")
+HotKeySet("!q", "_Exit")
 
 ;;;;;
 ;Globals
