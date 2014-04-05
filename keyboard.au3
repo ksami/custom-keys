@@ -33,8 +33,16 @@ $capslock_on = False
 initSettings()
 initKeyLabels()
 
+;;Get coords of work area
+;;$workarea = [Left,Top,Right,Bottom]
+Local Const $SPI_GETWORKAREA = 48
+Local $tWorkArea = DllStructCreate($tagRECT)
+_WinAPI_SystemParametersInfo($SPI_GETWORKAREA, 0, DllStructGetPtr($tWorkArea))
+Local $workarea[4] = [DllStructGetData($tWorkArea, "Left"), DllStructGetData($tWorkArea, "Top"), _
+	   DllStructGetData($tWorkArea, "Right") - DllStructGetData($tWorkArea, "Left"), DllStructGetData($tWorkArea, "Bottom") - DllStructGetData($tWorkArea, "Top")]
+
 ;;Init GUI
-Local $hGUI = GUICreate("Keyboard", 581, 201, -1, 600, $WS_POPUP, $WS_EX_TOPMOST)
+Local $hGUI = GUICreate("Keyboard", 581, 201, -1, -1, $WS_POPUP, $WS_EX_TOPMOST)
 GUICtrlCreateLabel("Click to drag this GUI" & @CRLF & "Press ESC to exit", 10, 10)
 GUISetBkColor($color_keyboard, $hGUI)
 GUICtrlSetDefColor($color_keytext, $hGUI)
@@ -43,7 +51,7 @@ GUISetFont($font_size, ($font_weight/100)*400, $font_attribute, $font_font, $hGU
 createKeys()
 
 GUISetState(@SW_SHOW, $hGUI)
-WinMove($hGUI, "", Default, Default, ($size_width/100)*581, ($size_height/100)*201)
+WinMove($hGUI, "", $workarea[2]/2-(($size_width/100)*581)/2, $workarea[3]-(($size_height/100)*201), ($size_width/100)*581, ($size_height/100)*201)
 WinSetTrans($hGUI, "", ($color_transparency/100)*255)
 
 ;;Run GUI and wait for close or clickdrag
