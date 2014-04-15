@@ -22,6 +22,7 @@ $color_keytext = 0x000000
 $color_transparency = 100	;in %
 $size_width = 100			;in %
 $size_height = 100			;in %
+$option_beep = 0			;off by default
 
 $hDLL = DllOpen("user32.dll")
 $capslock_on = False
@@ -133,6 +134,9 @@ EndFunc
 
 Func checkKey($keyHex, $keyVar, ByRef $keyWas)
    If _IsPressed($keyHex, $hDLL) AND ($keyWas = False) Then
+	  If ($option_beep = 1) Then
+		 beep(2000,100)
+	  EndIf
 	  $keyWas = True
 	  GUICtrlSetBkColor($keyVar,$color_keypressed)
 	  
@@ -701,6 +705,7 @@ Func initSettings()
    $font_font = IniRead($file_settingsini, "Font", "Font Face", $font_font)
    $size_width = IniRead($file_settingsini, "Interface", "Width", $size_width)
    $size_height = IniRead($file_settingsini, "Interface", "Height", $size_height)
+   $option_beep = IniRead($file_settingsini, "Options", "Beep", $option_beep)
 EndFunc
 
 Func _Exit()
